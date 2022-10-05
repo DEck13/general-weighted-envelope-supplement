@@ -1,0 +1,2550 @@
+---
+title: "Supplementary materials for 'General model-free weighted envelope estimation'"
+author: ""
+date: ""
+output: pdf_document
+header-includes: 
+ - \usepackage{amsthm}
+ - \usepackage{amsmath}
+ - \usepackage{amsfonts}
+ - \usepackage{amscd}
+ - \usepackage{amssymb}
+ - \usepackage[sectionbib]{natbib}
+ - \usepackage{url}
+ - \usepackage{graphicx,times}
+ - \usepackage{array,fancyhdr,rotating}
+ - \usepackage{xr} \externaldocument[main-]{eck2021modelfree}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#Sys.setenv(RSTUDIO_PANDOC="/Users/dje13/Desktop/RStudio.app/Contents/MacOS/pandoc")
+#list.files(Sys.getenv("RSTUDIO_PANDOC"))
+#Sys.getenv("RSTUDIO_PANDOC")
+```
+
+
+\textwidth=31.9pc
+\textheight=46.5pc
+\oddsidemargin=1pc
+\evensidemargin=1pc
+\headsep=15pt
+\topmargin=.6cm
+\parindent=1.7pc
+\parskip=0pt
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\rightmark}
+\rhead{Page \thepage}
+
+\setcounter{page}{1}
+\setcounter{equation}{0}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\calR}{\mathcal{R}}
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Mhat}{\widehat{M}}
+\newcommand{\Mstar}{\widehat{M}^{\textstyle{*}}}
+\newcommand{\Uhat}{\widehat{U}}
+\newcommand{\Ustar}{\widehat{U}^{\textstyle{*}}}
+\newcommand{\That}{\widehat{\theta}}
+\newcommand{\TFG}{\widehat{\theta}^{\text{FG}}}
+\newcommand{\TM}{\widehat{\theta}^{\text{M}}}
+\newcommand{\TD}{\widehat{\theta}^{\text{1D}}}
+\newcommand{\Ttil}{\widetilde{\theta}}
+\newcommand{\Tstar}{\widehat{\theta}^{\textstyle{*}}}
+\newcommand{\TstarM}{\widehat{\theta}^{{\text{M}}^{\textstyle{*}}}}
+\newcommand{\TstarFG}{\widehat{\theta}^{{\text{FG}}^{\textstyle{*}}}}
+\newcommand{\TstarD}{\widehat{\theta}^{{\text{1D}}^{\textstyle{*}}}}
+\newcommand{\Ttilstar}{\widetilde{\theta}^{\textstyle{*}}}
+\newcommand{\wstar}{w^{\textstyle{*}}}
+\newcommand{\Ghat}{\widehat{G}}
+\newcommand{\Gamhat}{\widehat{\Gamma}}
+\newcommand{\Gamstar}{\widehat{\Gamma}^{\textstyle{*}}}
+\newcommand{\GamstarT}{\widehat{\Gamma}^{\textstyle{*}^T}}
+\newcommand{\etahat}{\widehat{\eta}}
+\newcommand{\etastar}{\widehat{\eta}^{\textstyle{*}}}
+\newcommand{\Omhat}{\widehat{\Omega}}
+\newcommand{\Sigmahat}{\widehat{\Sigma}}
+\newcommand{\ghat}{\widehat{g}}
+\newcommand{\rootn}{\sqrt{n}}
+\newcommand{\envM}{\mathcal{E}_M}
+\newcommand{\Menv}{\Mhat_{\text{env}}}
+\newcommand{\Tenv}{\That_{\text{env}}}
+
+\newcommand{\Envw}{\widehat{\theta}_w}
+\newcommand{\EnvwFG}{\widehat{\theta}^{\text{FG}}_w}
+\newcommand{\EnvwM}{\widehat{\theta}^{\text{M}}_w}
+\newcommand{\EnvwoneD}{\widehat{\theta}^{\text{1D}}_w}
+\newcommand{\EnvuFG}{\widehat{\theta}^{\text{FG}}_u}
+\newcommand{\EnvuoneD}{\widehat{\theta}^{\text{1D}}_u}
+\newcommand{\EnvuFGstar}{\widehat{\theta}^{\text{FG}^{\textstyle{*}}}_u}
+\newcommand{\EnvuMstar}{\widehat{\theta}^{\text{M}^{\textstyle{*}}}_u}
+\newcommand{\EnvuoneDstar}{\widehat{\theta}^{\text{1D}^{\textstyle{*}}}_u}
+\newcommand{\EnvFGstar}{\widehat{\theta}^{\text{FG}^{\textstyle{*}}}}
+\newcommand{\EnvMstar}{\widehat{\theta}^{\text{M}^{\textstyle{*}}}}
+\newcommand{\EnvoneDstar}{\widehat{\theta}^{\text{1D}^{\textstyle{*}}}}
+\newcommand{\phistar}{\phi^{\textstyle{*}}}
+\newcommand{\IoneD}{\mathcal{I}_n^{\text{1D}}}
+\newcommand{\IFG}{\mathcal{I}_n^{\text{FG}}}
+\newcommand{\uoneD}{\hat{u}_{\text{1D}}}
+\newcommand{\In}{\mathcal{I}_n}
+\newcommand{\uFG}{\hat{u}_{\text{FG}}}
+\newcommand{\wFG}{w^{\text{FG}}}
+\newcommand{\wM}{w^{\text{M}}}
+\newcommand{\wstarFG}{w^{{\text{FG}}^{\textstyle{*}}}}
+\newcommand{\wFGhat}{\hat{w}^{\text{FG}}}
+\newcommand{\woneD}{w^{\text{1D}}}
+\newcommand{\woneDhat}{\hat{w}^{\text{1D}}}
+
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\Xstar}{\X^{\textstyle{*}}}
+\newcommand{\XstarT}{\X^{\textstyle{*}^T}}
+\newcommand{\gstar}{\hat{g}^{\textstyle{*}}}
+\newcommand{\Gstar}{\widehat{G}^{\textstyle{*}}}
+\newcommand{\GstarT}{\widehat{G}^{\textstyle{*}^T}}
+\newcommand{\Pstar}{\widehat{P}^{\textstyle{*}}}
+\newcommand{\Phat}{\widehat{P}}
+\newcommand{\Qstar}{\widehat{Q}^{\textstyle{*}}}
+\newcommand{\Qhat}{\widehat{Q}}
+\newcommand{\Jstar}{J^{\textstyle{*}}}
+\newcommand{\lstar}{l^{\textstyle{*}}}
+
+
+<!-- \markright{ \hbox{\footnotesize\rm Statistica Sinica: Supplement}\hfill\\[-13pt] -->
+<!-- \hbox{\footnotesize\rm\hfill } -->
+<!-- \markboth{\hfill{\footnotesize\rm Daniel J. Eck} \hfill} -->
+<!-- {\hfill {\footnotesize\rm Model-free envelope estimation} \hfill}} -->
+
+ \centerline{\large Daniel J. Eck}
+\vspace{.4cm}
+ \centerline{\it Department of Statistics, University of Illinois}
+\vspace{.55cm}
+<!--  \centerline{\bf Supplementary Material} -->
+<!-- \vspace{.55cm} -->
+\fontsize{9}{11.5pt plus.8pt minus .6pt}\selectfont
+
+\def\theequation{S\arabic{section}.\arabic{equation}}
+\def\thesection{S\arabic{section}}
+
+\fontsize{12}{14pt plus.8pt minus .6pt}\selectfont
+
+
+This supplement serves as a README for anyone that wishes to fully reproduce our simulation results or alter our code for their own analyses. The Matlab based simulations adopted from \citet{zhangmai} are not fully reproduced here, however the code to produce those simulations is available upon request. This document sources in output from twenty nine scripts: 
+
+\vspace*{0.25cm}
+
+\begin{itemize}
+\item[1.] source.R - functions used in all of our simulations.
+\item[2.] logistic\_simulation\_A.R - first half of our first batch of logistic regression simulations.
+\item[3.] logistic\_simulation\_A-2.R - second half of our first batch of logistic regression simulations.
+\item[4.] logistic\_simulation\_B.R - first half of our second batch of logistic regression simulations.
+\item[5.] logistic\_simulation\_B.R - second half of our second batch of logistic regression simulations.
+\item[6.] poisson\_simulation.R - first part of our poisson regression simulations.
+\item[7.] poisson\_simulation-2.R - second part of our poisson regression simulations.
+\item[8.] poisson\_simulation-3.R - third part of our poisson regression simulations.
+\item[9.] poisson\_simulation-4.R - fourth part of our poisson regression simulations.
+\item[10.] logistic\_simulation\_p20.R - first part of our third batch of logistic regression simulations.
+\item[11-29.] logistic\_simulation\_p20-j.R - $j$th part of our third batch of logistic regression simulations, $j = 2,...,20$.
+\end{itemize}
+
+<!-- 12. logistic_simulation_p20-3.R - third part of our third batch of logistic regression simulations. -->
+<!-- 13. logistic_simulation_p20-4.R - fourth part of our third batch of logistic regression simulations. -->
+<!-- 14. logistic_simulation_p20-5.R - fifth part of our third batch of logistic regression simulations. -->
+<!-- 15. logistic_simulation_p20-6.R - sixth part of our third batch of logistic regression simulations. -->
+<!-- 16. logistic_simulation_p20-7.R - seventh part of our third batch of logistic regression simulations. -->
+<!-- 17. logistic_simulation_p20-8.R - eighth part of our third batch of logistic regression simulations. -->
+<!-- 18. logistic_simulation_p20-9.R - ninth part of our third batch of logistic regression simulations. -->
+<!-- 19. logistic_simulation_p20-10.R - tenth part of our third batch of logistic regression simulations. -->
+<!-- 20. logistic_simulation_p20-11.R - eleventh part of our third batch of logistic regression simulations. -->
+<!-- 21. logistic_simulation_p20-12.R - twelth part of our third batch of logistic regression simulations. -->
+<!-- 22. logistic_simulation_p20-13.R - thirteenth part of our third batch of logistic regression simulations. -->
+<!-- 23. logistic_simulation_p20-14.R - fourteenth part of our third batch of logistic regression simulations. -->
+<!-- 24. logistic_simulation_p20-15.R - fifteenth part of our third batch of logistic regression simulations. -->
+<!-- 25. logistic_simulation_p20-16.R - sixteenth part of our third batch of logistic regression simulations. -->
+<!-- 26. logistic_simulation_p20-17.R - seventeenth part of our third batch of logistic regression simulations. -->
+<!-- 27. logistic_simulation_p20-18.R - eighteenth part of our third batch of logistic regression simulations. -->
+<!-- 28. logistic_simulation_p20-19.R - nineteenth part of our third batch of logistic regression simulations. -->
+<!-- 29. logistic_simulation_p20-20.R - twentieth part of our third batch of logistic regression simulations. -->
+
+\vspace*{0.25cm}
+
+The twenty eight regression simulation scripts first load in source.R. These scripts are each then executed on a 20 core node on the UIUC campus cluster and they are run in parallel. The following software packages and scripts are required for this document to run:
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(faraway)
+library(xtable)
+library(parallel)
+source("source.R")
+```
+
+Our numerical simulations begin with envelope estimation in logistic regression and end with envelope estimation in Poisson regression. 
+
+\newpage 
+
+# Numerical examples
+
+### Logistic regression simulations 
+
+
+
+#### Setting A:
+
+We provide a second set of logistic regression simulations for illustration. We load in the output from the second batch of logistic regression simulations.
+
+```{r logsims_MC_A, cache = TRUE}
+load("lsimsA.RData")
+load("lsimsA-2.RData")
+```
+
+The setup for this simulation is similar to the previous logistic regression simulations. The simulation configurations are again included for completeness. We first create the basis matrix $\Gamma$ for the true envelope space and the basis matrix for its orthogonal complement $\Gamma_o$.
+
+```{r}
+p <- 6; u <- 3
+init <- rep(1, 6)
+v1 <- matrix(init, nrow = p)
+O <-qr.Q(qr(v1), complete = TRUE)
+Gamma <- O[, 1:u]
+Gamma0 <- O[, (u+1):p]
+```
+
+We next create the core of the material and immaterial variation, denoted as $\Omega$ and $\Omega_o$ respectively.
+
+```{r}
+Omega <- diag(exp(c(0.25,0.5,0.75)))
+Omega0 <- diag(exp(c(-4,-2,1)))
+```
+
+We now build the variance matrix of the predictor variables and construct the true canonical parameter vector (regression coefficient vector) as an element contained in $\text{span}(\Gamma)$.
+
+```{r}
+SigmaX <- Gamma%*%Omega%*%t(Gamma) + Gamma0%*%Omega0%*%t(Gamma0)
+eig <- eigen(SigmaX)
+SigmaX.half <- eig$vec %*% diag(sqrt(eig$val)) %*% t(eig$vec)
+beta <- (-0.5*Gamma[, 1] - 0.5*Gamma[, 2] - 1.5*Gamma[, 3]) / 2
+matrix(beta, ncol = 1)
+```
+
+
+
+We now describe the nonparametric bootstrap procedure for all envelope estimators of the canonical parameter vector mentioned in the main text and computed in the accompanying R scripts. Our bootstrap simulation will consider two model selection regimes for determining the envelope dimension $\hat{u}_{1D}$ at every iteration.  In one scheme, we estimate the envelope dimension at every iteration of the bootstrap (variable $u$). In the other scheme, we estimate the dimension of the envelope space in the original data set and then treat this estimated dimension as the true dimension when we resample our data and calculate these envelope estimators (fixed $u$), thus ignoring the variability associated with model selection.  Theorem 3 in the main text provides some guidance for the performance of the nonparametric bootstrap for estimating the variability of $\TD_w$, an analog does not exist for the other envelope estimators. 
+
+The `sim_function` function (included in the source.R file) generates a logistic regression model that incorporates the above envelope structure that is stored in your global environment. The function performs a nonparametric bootstrap with respect to all considered estimators that can be viewed in Table 1. This function also returns the estimated envelope dimension at every iteration of the nonparametric bootstrap.
+
+\begin{table}[t]
+\begin{tabular}{cl}
+	Quantity & Description \\
+	$\widehat\theta_w^{{\text{FG}}^{\textstyle{*}}}$ or $\widehat\theta_w^{{\text{1D}}^{\textstyle{*}}}$ & The weighted envelope estimator $\widehat\theta^{\text{FG}}_w$ or $\widehat\theta^{\text{1D}}_w$ computed with \\
+	& respect to resampled data. \\
+	$\widehat{\theta}_k^{{\text{FG}}^{\textstyle{*}}}$ or $\widehat{\theta}_k^{\text{1D}^{\textstyle{*}}}$ & The envelope estimator $\widehat{\theta}_k^{\text{FG}}$ or $\widehat{\theta}_{k}^{\text{1D}}$ fit at dimension $k$ computed with \\ 
+	& respect to resampled data. \\
+	$\widehat{\theta}_{\hat u_{\text{FG}}}^{\text{FG}^{\textstyle{*}}}$ or $\widehat{\theta}_{\hat u_{\text{1D}}}^{\text{1D}^{\textstyle{*}}}$ & The envelope estimator $\widehat{\theta}_{\hat u_{\text{FG}}}^{\text{FG}}$ or $\widehat{\theta}_{\hat u_{\text{1D}}}^{\text{1D}}$ fit at the dimension estimated from \\ 
+	& the original sample $\hat u_{\text{FG}}$ or $\hat u_{\text{1D}}$ and is then computed with respect to \\ 
+	& resampled data. We call this the fixed $u$ regime. \\
+	$\widehat{\theta}_{\hat u_{\text{FG}}^{\textstyle{*}}}^{\text{FG}^{\textstyle{*}}}$ or $\widehat{\theta}_{\hat u_{\text{1D}}^{{\textstyle{*}}}}^{\text{1D}^{\textstyle{*}}}$ & The envelope estimator $\widehat{\theta}_{\hat u_{\text{FG}}}^{\text{FG}}$ or $\widehat{\theta}_{\hat u_{\text{1D}}}^{\text{1D}}$ fit at the dimension estimated from \\ 
+	& resampled data $\hat u_{\text{FG}^{\textstyle{*}}}$ or $\hat u_{\text{1D}^{\textstyle{*}}}$ and is then also computed with respect \\ 
+	& to resampled data. We call this the variable $u$ regime. This estimator \\
+	& is similar to the consistent model free estimators developed by \\ 
+	& \cite{zhangmai}.\\
+	$r(\widehat\theta_1, \widehat\theta_2)$ & A column vector containing ratios of bootstrapped standard errors \\ 
+	& $\text{se}^{*}(\widehat{\theta_{1,j}})/\text{se}^{*}(\widehat{\theta_{2,j}})$, $j = 1,\ldots,p$.
+\end{tabular}
+\caption{Description of bootstrap estimators.}
+\label{tab:desc}	
+\end{table}
+
+
+We now combine the two halves from our Monte Carlo simulations to estimate ratios, coverage probabilities, and distribution of the estimated envelope dimension.
+
+
+```{r, dependson="logsims_MC_A", cache = TRUE}
+for(j in 1:4) lsims_MC_A[[j]] <- 
+	rbind(lsims_MC_A[[j]], lsims_MC_A_2[[j]])
+```
+
+Important sample sizes are given below.
+
+```{r}
+nMC <- 400 # Monte Carlo sample size
+ns <- c(200, 400, 600, 800) # sample sizes
+nboot <- 1e3 # bootstrap sample size
+```
+
+The distribution of $u$ across bootstrap and Monte Carlo iterates is presented below. Code is included in the accompanying .Rmd file.
+
+```{r, echo = FALSE}
+names_u <- c("u_star1D", "u_starFG")
+output_udist <- do.call(rbind, lapply(1:length(lsims_MC_A), 
+  function(k){
+    MC_means <- colMeans(lsims_MC_A[[k]])
+    cbind(do.call(cbind, lapply(names_u, function(j){
+      as.numeric(MC_means[grep(j, colnames(lsims_MC_A[[k]]))])
+    })), 1:p, ns[k])
+}))
+colnames(output_udist) <- c(names_u, "comp", "n")
+output_udist <- as.data.frame(output_udist)
+output_udist_long <- gather(output_udist, estimator, dist, 
+                             c(u_star1D, u_starFG), 
+                             factor_key=TRUE)
+```
+
+
+\vspace*{0.5cm}
+```{r logAdim, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_udist_long, 
+       aes(x = n, y = dist, lty = estimator)) + 
+  ggtitle('Distribution of u (logistic regression)') + 
+  labs(x="n", y= "empirical probability") + 
+  ylim(-0.01, 1) + 
+  #geom_smooth(aes(x = n, y = dist), color = "black",
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = dist)) + 
+  scale_linetype_manual(
+    values=c('u_star1D'=1, 'u_starFG'=2),
+    labels = c('u 1D', 'u FG')) +
+  scale_colour_manual(name = 'Estimator:', 
+    values = c('u_star1D'='black','u_starFG'='black'),
+    labels = c('1D', 'FG')) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+\newpage
+Results for ratios of bootstrap standard errors relative to the MLE are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+ratio_names_star <- c("betaenv_true_1D_star", 
+                "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                "w_betaenv_FG_star")
+output_ratios <- do.call(rbind, lapply(1:length(lsims_MC_A), function(k){
+  MC_means <- colMeans(lsims_MC_A[[k]])
+  cbind(do.call(cbind, lapply(ratio_names_star, function(j){
+    as.numeric(MC_means[grep(paste("ratio_", j, sep = ""), 
+                             colnames(lsims_MC_A[[k]]))])
+  })), 1:p, ns[k])
+}))
+colnames(output_ratios) <- c(paste("ratio_", ratio_names_star, sep = ""), "comp", "n")
+output_ratios <- as.data.frame(output_ratios)
+
+output_ratios_long <- gather(output_ratios, estimator, ratio, 
+  c(ratio_betaenv_true_1D_star, ratio_betaenv_fixedu_1D_star, 
+    ratio_betaenv_var_1D_star, ratio_w_betaenv_1D_star, 
+    ratio_betaenv_true_FG_star, ratio_betaenv_fixedu_FG_star, 
+    ratio_betaenv_var_FG_star, ratio_w_betaenv_FG_star), 
+    factor_key=TRUE) %>%
+  mutate(technique = 
+  fct_collapse(as.factor(as.numeric(grepl("1D", estimator))), 
+    "1D" = "1", "FG" = "0"),
+  estimator = fct_collapse(estimator, 
+    weighted = c("ratio_w_betaenv_1D_star", 
+      "ratio_w_betaenv_FG_star"),
+    varu = c("ratio_betaenv_var_1D_star", 
+      "ratio_betaenv_var_FG_star"),
+    fixedu = c("ratio_betaenv_fixedu_1D_star", 
+      "ratio_betaenv_fixedu_FG_star"),
+    true = c("ratio_betaenv_true_1D_star", 
+      "ratio_betaenv_true_FG_star")))
+```
+
+
+```{r logAratios, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_ratios_long, 
+  aes(x = n, y = ratio, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of ratios (logistic regression)') + 
+  labs(x="n", y="ratio of standard errors") + 
+  #geom_smooth(aes(x = n, y = ratio), 
+  #            size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = ratio)) +
+  geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+\newpage
+```{r logAratios_nofixedu, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_ratios_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = ratio, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="ratio of standard errors") + 
+  #geom_smooth(aes(x = n, y = ratio), 
+  #            size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = ratio)) +
+  geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+\newpage 
+Results for univariate coverage probabilities are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+## Coverages
+coverages_names_star <- c("betahat_star", "betaenv_true_1D_star", 
+                      "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                      "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                      "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                      "w_betaenv_FG_star")
+output_coverages <- do.call(rbind, lapply(1:length(lsims_MC_A), function(k){
+  MC_means <- colMeans(lsims_MC_A[[k]])
+  cbind(do.call(cbind, lapply(coverages_names_star, function(j){
+    as.numeric(MC_means[grep(paste("coverages_", j, sep = ""), 
+                             colnames(lsims_MC_A[[k]]))])
+  })), 1:p, ns[k])
+}))
+colnames(output_coverages) <- 
+  c(paste("coverages_", coverages_names_star, sep = ""), "comp", "n")
+output_coverages <- as.data.frame(output_coverages)
+
+output_coverages_long <- gather(output_coverages, estimator, coverage, 
+  c(coverages_betahat_star, coverages_betaenv_true_1D_star, 
+    coverages_betaenv_fixedu_1D_star, coverages_betaenv_var_1D_star, 
+    coverages_w_betaenv_1D_star, coverages_betaenv_true_FG_star, 
+    coverages_betaenv_fixedu_FG_star, coverages_betaenv_var_FG_star, 
+    coverages_w_betaenv_FG_star), 
+  factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+    as.numeric(grepl("betahat", estimator)) + 
+    as.numeric(!grepl("FG", estimator))), 
+      "FG" = "0", "1D" = "1", "MLE" = "2"),
+         estimator = fct_collapse(estimator, 
+          MLE = c("coverages_betahat_star"),
+          true = c("coverages_betaenv_true_1D_star", 
+            "coverages_betaenv_true_FG_star"),
+          fixedu = c("coverages_betaenv_fixedu_1D_star", 
+            "coverages_betaenv_fixedu_FG_star"),
+          varu = c("coverages_betaenv_var_1D_star", 
+            "coverages_betaenv_var_FG_star"),
+          weighted = c("coverages_w_betaenv_1D_star", 
+            "coverages_w_betaenv_FG_star")))
+```
+
+
+```{r logAcov, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_coverages_long,  
+       aes(x = n, y = coverage, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of coverage probabilities (logistic regression)') + 
+  labs(x="n", y="coverage probability") + 
+  #geom_smooth(aes(x = n, y = coverage), 
+  #            size = 0.75, method = "lm", formula = y ~ x, # + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = coverage)) +
+  geom_abline(intercept = 0.95, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+\newpage
+```{r, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_coverages_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = coverage, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="coverage probability") + 
+  #geom_smooth(aes(x = n, y = coverage), 
+  #            size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = coverage)) +
+  geom_abline(intercept = 0.95, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+
+\newpage
+Results for the MSE of the averaged over Monte Carlo samples of are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+MSE_names_star <- c("betahat_star", "betaenv_true_1D_star", 
+                            "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                            "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                            "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                            "w_betaenv_FG_star")
+output_MSE <- do.call(rbind, lapply(1:length(lsims_MC_A), function(k){
+  MC_means <- colMeans(lsims_MC_A[[k]])
+  cbind(do.call(cbind, lapply(MSE_names_star, function(j){
+    as.numeric(MC_means[grep(paste("MSE_", j, sep = ""), 
+                             colnames(lsims_MC_A[[k]]))])
+  })), ns[k])
+}))
+colnames(output_MSE) <- 
+  c(paste("MSE_", MSE_names_star, sep = ""), "n")
+output_MSE <- as.data.frame(output_MSE)
+
+output_MSE_long <- gather(output_MSE, estimator, MSE, 
+                                  c(MSE_betahat_star, MSE_betaenv_true_1D_star, 
+                                    MSE_betaenv_fixedu_1D_star, MSE_betaenv_var_1D_star, 
+                                    MSE_w_betaenv_1D_star, MSE_betaenv_true_FG_star, 
+                                    MSE_betaenv_fixedu_FG_star, MSE_betaenv_var_FG_star, 
+                                    MSE_w_betaenv_FG_star), factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+    as.numeric(grepl("betahat", estimator)) + 
+      as.numeric(!grepl("FG", estimator))), 
+    "FG" = "0", "1D" = "1", "MLE" = "2"),
+    estimator = fct_collapse(estimator, 
+                             MLE = c("MSE_betahat_star"),
+                             true = c("MSE_betaenv_true_1D_star", 
+                                      "MSE_betaenv_true_FG_star"),
+                             fixedu = c("MSE_betaenv_fixedu_1D_star", 
+                                        "MSE_betaenv_fixedu_FG_star"),
+                             varu = c("MSE_betaenv_var_1D_star", 
+                                      "MSE_betaenv_var_FG_star"),
+                             weighted = c("MSE_w_betaenv_1D_star", 
+                                          "MSE_w_betaenv_FG_star")))
+```
+
+
+```{r logAMSE, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_MSE_long, #%>% filter(estimator != "fixedu"), 
+       aes(x = n, y = MSE, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of MSE') + 
+  labs(x="n", y="MSE of parameter estimation") + 
+  #geom_smooth(aes(x = n, y = MSE), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = MSE)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+\newpage
+```{r logAMSE_nofixedu, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_MSE_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = MSE, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="MSE of parameter estimation") + 
+  #geom_smooth(aes(x = n, y = MSE), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = MSE)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+\newpage 
+Results for the $p$th root determinants of the bootstrapped variances averaged over Monte Carlo samples of are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+## Determinants
+pthrootdets_names_star <- c("betahat_star", "betaenv_true_1D_star", 
+                      "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                      "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                      "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                      "w_betaenv_FG_star")
+output_pthrootdets <- do.call(rbind, lapply(1:length(lsims_MC_A), function(k){
+  MC_means <- colMeans(lsims_MC_A[[k]])
+  cbind(do.call(cbind, lapply(pthrootdets_names_star, function(j){
+    as.numeric(MC_means[grep(paste("pthrootdets_", j, sep = ""), 
+                             colnames(lsims_MC_A[[k]]))])
+  })), ns[k])
+}))
+colnames(output_pthrootdets) <- 
+  c(paste("pthrootdets_", pthrootdets_names_star, sep = ""), "n")
+output_pthrootdets <- as.data.frame(output_pthrootdets)
+
+output_pthrootdets_long <- gather(output_pthrootdets, estimator, pthrootdet, 
+  c(pthrootdets_betahat_star, pthrootdets_betaenv_true_1D_star, 
+    pthrootdets_betaenv_fixedu_1D_star, pthrootdets_betaenv_var_1D_star, 
+    pthrootdets_w_betaenv_1D_star, pthrootdets_betaenv_true_FG_star, 
+    pthrootdets_betaenv_fixedu_FG_star, pthrootdets_betaenv_var_FG_star, 
+    pthrootdets_w_betaenv_FG_star), factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+    as.numeric(grepl("betahat", estimator)) + 
+      as.numeric(!grepl("FG", estimator))), 
+    "FG" = "0", "1D" = "1", "MLE" = "2"),
+         estimator = fct_collapse(estimator, 
+                                  MLE = c("pthrootdets_betahat_star"),
+                                  true = c("pthrootdets_betaenv_true_1D_star", 
+                                           "pthrootdets_betaenv_true_FG_star"),
+                                  fixedu = c("pthrootdets_betaenv_fixedu_1D_star", 
+                                             "pthrootdets_betaenv_fixedu_FG_star"),
+                                  varu = c("pthrootdets_betaenv_var_1D_star", 
+                                           "pthrootdets_betaenv_var_FG_star"),
+                                  weighted = c("pthrootdets_w_betaenv_1D_star", 
+                                               "pthrootdets_w_betaenv_FG_star")))
+```
+
+
+```{r, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_long,  
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of variances (logistic regression)') + 
+  labs(x="n", y="pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+\newpage
+```{r, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+
+\newpage
+Results for the ratios of the $p$th root determinants of the bootstrapped variances relative to the MLE averaged over Monte Carlo samples of are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+## Ratios of determinants
+pthrootdets_names_star <- c("betaenv_true_1D_star", 
+                      "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                      "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                      "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                      "w_betaenv_FG_star")
+output_pthrootdets_ratios <- do.call(rbind, lapply(1:length(lsims_MC_A), function(k){
+  cbind(do.call(cbind, lapply(pthrootdets_names_star, function(j){
+		mean(as.data.frame(lsims_MC_A[[k]])$pthrootdets_betahat_star / 
+				 	as.data.frame(lsims_MC_A[[k]])[, 
+					colnames(as.data.frame(lsims_MC_A[[k]])) == 
+						paste("pthrootdets_", j, sep = "")])})), ns[k])
+}))
+colnames(output_pthrootdets_ratios) <- 
+  c(paste("pthrootdets_", pthrootdets_names_star, sep = ""), "n")
+output_pthrootdets_ratios <- as.data.frame(output_pthrootdets_ratios)
+
+output_pthrootdets_ratios_long <- gather(output_pthrootdets_ratios, estimator, pthrootdet, 
+  c(pthrootdets_betaenv_true_1D_star, 
+    pthrootdets_betaenv_fixedu_1D_star, pthrootdets_betaenv_var_1D_star, 
+    pthrootdets_w_betaenv_1D_star, pthrootdets_betaenv_true_FG_star, 
+    pthrootdets_betaenv_fixedu_FG_star, pthrootdets_betaenv_var_FG_star, 
+    pthrootdets_w_betaenv_FG_star), factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+      as.numeric(!grepl("FG", estimator))), 
+    "FG" = "0", "1D" = "1"),
+         estimator = fct_collapse(estimator, 
+                                  true = c("pthrootdets_betaenv_true_1D_star", 
+                                           "pthrootdets_betaenv_true_FG_star"),
+                                  fixedu = c("pthrootdets_betaenv_fixedu_1D_star", 
+                                             "pthrootdets_betaenv_fixedu_FG_star"),
+                                  varu = c("pthrootdets_betaenv_var_1D_star", 
+                                           "pthrootdets_betaenv_var_FG_star"),
+                                  weighted = c("pthrootdets_w_betaenv_1D_star", 
+                                               "pthrootdets_w_betaenv_FG_star")))
+```
+
+
+```{r, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_ratios_long,  
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of variances (logistic regression)') + 
+  labs(x="n", y="ratios of pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) + 
+	geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(#legend.position="bottom", 
+        panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+\newpage
+```{r, dependson="logsims_MC_A", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_ratios_long  %>% filter(estimator != "fixedu"),  
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="ratios of pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) + 
+	geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+
+
+
+
+
+
+\newpage
+
+#### Setting B 
+
+We load in the output from the first batch of logistic regression simulations.
+
+```{r logsims_MC_B, cache = TRUE}
+load("lsimsB.RData")
+load("lsimsB-2.RData")
+```
+
+
+The simulation configurations are included here for completeness. First we construction the basis matrix for the envelope space.
+
+```{r}
+p <- 6; u <- 3
+init <- rep(1, 6)
+v1 <- matrix(init, nrow = p)
+O <-qr.Q(qr(v1), complete = TRUE)
+Gamma <- O[, 1:u]
+Gamma0 <- O[, (u+1):p]
+```
+
+We next create the core of the material and immaterial variation, denoted as $\Omega$ and $\Omega_o$ respectively.
+
+```{r}
+Omega <- diag(c(0.5,1,1.5)) 
+Omega0 <- diag(exp(c(-3,-2,1)))
+```
+
+We now build the variance matrix of the predictor variables and construct the true canonical parameter vector (regression coefficient vector) as an element contained in $\text{span}(\Gamma)$.
+
+```{r}
+SigmaX <- Gamma%*%Omega%*%t(Gamma) + Gamma0%*%Omega0%*%t(Gamma0)
+eig <- eigen(SigmaX)
+SigmaX.half <- eig$vec %*% diag(sqrt(eig$val)) %*% t(eig$vec)
+beta <- -(0.5*Gamma[, 1] - 2*Gamma[, 2] - 2*Gamma[, 3]) / 3
+as.matrix(beta, ncol = 1)
+```
+
+
+We now combine the two halves from our Monte Carlo simulations to estimate ratios, coverage probabilities, and distribution of the estimated envelope dimension.
+
+
+```{r, dependson="logsims_MC_B", cache = TRUE}
+for(j in 1:4) lsims_MC_B[[j]] <- 
+	rbind(lsims_MC_B[[j]], lsims_MC_B_2[[j]])
+```
+
+Important sample sizes are given below.
+
+```{r}
+nMC <- 400 # Monte Carlo sample size
+ns <- c(250, 400, 600, 800) # sample sizes
+nboot <- 1e3 # bootstrap sample size
+```
+
+The distribution of $u$ across bootstrap and Monte Carlo iterates is presented below. Code is included in the accompanying .Rmd file.
+
+
+
+```{r, echo = FALSE}
+names_u <- c("u_star1D", "u_starFG")
+output_udist <- do.call(rbind, lapply(1:length(lsims_MC_B), 
+  function(k){
+    MC_means <- colMeans(lsims_MC_B[[k]])
+    cbind(do.call(cbind, lapply(names_u, function(j){
+      as.numeric(MC_means[grep(j, colnames(lsims_MC_B[[k]]))])
+    })), 1:p, ns[k])
+}))
+colnames(output_udist) <- c(names_u, "comp", "n")
+output_udist <- as.data.frame(output_udist)
+output_udist_long <- gather(output_udist, estimator, dist, 
+                             c(u_star1D, u_starFG), 
+                             factor_key=TRUE)
+```
+
+\vspace*{0.5cm}
+
+```{r logBdim, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_udist_long, 
+       aes(x = n, y = dist, lty = estimator)) + 
+  ggtitle('Distribution of u (logistic regression)') + 
+  labs(x="n", y= "empirical probability") + 
+  ylim(-0.01, 1) + 
+  geom_smooth(aes(x = n, y = dist), color = "black",
+              size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+              se = FALSE) + 
+  scale_linetype_manual(
+    values=c('u_star1D'=1, 'u_starFG'=2),
+    labels = c('u 1D', 'u FG')) +
+  scale_colour_manual(name = 'Estimator:', 
+    values = c('u_star1D'='black','u_starFG'='black'),
+    labels = c('1D', 'FG')) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+\newpage
+Results for ratios of bootstrap standard errors relative to the MLE are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+ratio_names_star <- c("betaenv_true_1D_star", 
+                "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                "w_betaenv_FG_star")
+output_ratios <- do.call(rbind, lapply(1:length(lsims_MC_B), function(k){
+  MC_means <- colMeans(lsims_MC_B[[k]])
+  cbind(do.call(cbind, lapply(ratio_names_star, function(j){
+    as.numeric(MC_means[grep(paste("ratio_", j, sep = ""), 
+                             colnames(lsims_MC_B[[k]]))])
+  })), 1:p, ns[k])
+}))
+colnames(output_ratios) <- c(paste("ratio_", ratio_names_star, sep = ""), "comp", "n")
+output_ratios <- as.data.frame(output_ratios)
+
+output_ratios_long <- gather(output_ratios, estimator, ratio, 
+  c(ratio_betaenv_true_1D_star, ratio_betaenv_fixedu_1D_star, 
+    ratio_betaenv_var_1D_star, ratio_w_betaenv_1D_star, 
+    ratio_betaenv_true_FG_star, ratio_betaenv_fixedu_FG_star, 
+    ratio_betaenv_var_FG_star, ratio_w_betaenv_FG_star), 
+    factor_key=TRUE) %>%
+  mutate(technique = 
+  fct_collapse(as.factor(as.numeric(grepl("1D", estimator))), 
+    "1D" = "1", "FG" = "0"),
+  estimator = fct_collapse(estimator, 
+    weighted = c("ratio_w_betaenv_1D_star", 
+      "ratio_w_betaenv_FG_star"),
+    varu = c("ratio_betaenv_var_1D_star", 
+      "ratio_betaenv_var_FG_star"),
+    fixedu = c("ratio_betaenv_fixedu_1D_star", 
+      "ratio_betaenv_fixedu_FG_star"),
+    true = c("ratio_betaenv_true_1D_star", 
+      "ratio_betaenv_true_FG_star")))
+```
+
+
+```{r logBratios, dependson="logsims_MC_B",echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_ratios_long, 
+  aes(x = n, y = ratio, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of ratios (logistic regression)') + 
+  labs(x="n", y="ratio of standard errors") + 
+  geom_smooth(aes(x = n, y = ratio), 
+              size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+              se = FALSE) + 
+	#geom_line(aes(x = n, y = ratio)) +
+  geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+\newpage
+```{r logBratios_nofixedu, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_ratios_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = ratio, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="ratio of standard errors") + 
+  geom_smooth(aes(x = n, y = ratio), 
+              size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+              se = FALSE) + 
+	#geom_line(aes(x = n, y = ratio)) +
+  geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+\newpage 
+Results for univariate coverage probabilities are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+## Coverages
+coverages_names_star <- c("betahat_star", "betaenv_true_1D_star", 
+                      "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                      "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                      "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                      "w_betaenv_FG_star")
+output_coverages <- do.call(rbind, lapply(1:length(lsims_MC_B), function(k){
+  MC_means <- colMeans(lsims_MC_B[[k]])
+  cbind(do.call(cbind, lapply(coverages_names_star, function(j){
+    as.numeric(MC_means[grep(paste("coverages_", j, sep = ""), 
+                             colnames(lsims_MC_B[[k]]))])
+  })), 1:p, ns[k])
+}))
+colnames(output_coverages) <- 
+  c(paste("coverages_", coverages_names_star, sep = ""), "comp", "n")
+output_coverages <- as.data.frame(output_coverages)
+
+output_coverages_long <- gather(output_coverages, estimator, coverage, 
+  c(coverages_betahat_star, coverages_betaenv_true_1D_star, 
+    coverages_betaenv_fixedu_1D_star, coverages_betaenv_var_1D_star, 
+    coverages_w_betaenv_1D_star, coverages_betaenv_true_FG_star, 
+    coverages_betaenv_fixedu_FG_star, coverages_betaenv_var_FG_star, 
+    coverages_w_betaenv_FG_star), 
+  factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+    as.numeric(grepl("betahat", estimator)) + 
+    as.numeric(!grepl("FG", estimator))), 
+      "FG" = "0", "1D" = "1", "MLE" = "2"),
+         estimator = fct_collapse(estimator, 
+          MLE = c("coverages_betahat_star"),
+          true = c("coverages_betaenv_true_1D_star", 
+            "coverages_betaenv_true_FG_star"),
+          fixedu = c("coverages_betaenv_fixedu_1D_star", 
+            "coverages_betaenv_fixedu_FG_star"),
+          varu = c("coverages_betaenv_var_1D_star", 
+            "coverages_betaenv_var_FG_star"),
+          weighted = c("coverages_w_betaenv_1D_star", 
+            "coverages_w_betaenv_FG_star")))
+```
+
+
+```{r logBcov, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_coverages_long,  
+       aes(x = n, y = coverage, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of coverage probabilities (logistic regression)') + 
+  labs(x="n", y="coverage probability") + 
+  geom_smooth(aes(x = n, y = coverage), 
+              size = 0.75, method = "lm", formula = y ~ x, # + I(x^2), 
+              se = FALSE) + 
+  #geom_line(aes(x = n, y = coverage)) +
+  geom_abline(intercept = 0.95, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+\newpage
+```{r logBcov_nofixedu, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_coverages_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = coverage, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="coverage probability") + 
+  geom_smooth(aes(x = n, y = coverage), 
+              size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+              se = FALSE) + 
+  #geom_line(aes(x = n, y = coverage)) +
+  geom_abline(intercept = 0.95, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+\newpage
+Results for the MSE of the averaged over Monte Carlo samples of are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+MSE_names_star <- c("betahat_star", "betaenv_true_1D_star", 
+                            "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                            "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                            "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                            "w_betaenv_FG_star")
+output_MSE <- do.call(rbind, lapply(1:length(lsims_MC_B), function(k){
+  MC_means <- colMeans(lsims_MC_B[[k]])
+  cbind(do.call(cbind, lapply(MSE_names_star, function(j){
+    as.numeric(MC_means[grep(paste("MSE_", j, sep = ""), 
+                             colnames(lsims_MC_B[[k]]))])
+  })), ns[k])
+}))
+colnames(output_MSE) <- 
+  c(paste("MSE_", MSE_names_star, sep = ""), "n")
+output_MSE <- as.data.frame(output_MSE)
+
+output_MSE_long <- gather(output_MSE, estimator, MSE, 
+                                  c(MSE_betahat_star, MSE_betaenv_true_1D_star, 
+                                    MSE_betaenv_fixedu_1D_star, MSE_betaenv_var_1D_star, 
+                                    MSE_w_betaenv_1D_star, MSE_betaenv_true_FG_star, 
+                                    MSE_betaenv_fixedu_FG_star, MSE_betaenv_var_FG_star, 
+                                    MSE_w_betaenv_FG_star), factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+    as.numeric(grepl("betahat", estimator)) + 
+      as.numeric(!grepl("FG", estimator))), 
+    "FG" = "0", "1D" = "1", "MLE" = "2"),
+    estimator = fct_collapse(estimator, 
+                             MLE = c("MSE_betahat_star"),
+                             true = c("MSE_betaenv_true_1D_star", 
+                                      "MSE_betaenv_true_FG_star"),
+                             fixedu = c("MSE_betaenv_fixedu_1D_star", 
+                                        "MSE_betaenv_fixedu_FG_star"),
+                             varu = c("MSE_betaenv_var_1D_star", 
+                                      "MSE_betaenv_var_FG_star"),
+                             weighted = c("MSE_w_betaenv_1D_star", 
+                                          "MSE_w_betaenv_FG_star")))
+```
+
+
+```{r logBMSE, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_MSE_long, #%>% filter(estimator != "fixedu"), 
+       aes(x = n, y = MSE, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of MSE') + 
+  labs(x="n", y="MSE of parameter estimation") + 
+  #geom_smooth(aes(x = n, y = MSE), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = MSE)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+\newpage
+```{r logBMSE_nofixedu, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_MSE_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = MSE, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="MSE of parameter estimation") + 
+  #geom_smooth(aes(x = n, y = MSE), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = MSE)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+\newpage 
+Results for the $p$th root determinants of the bootstrapped variances averaged over Monte Carlo samples of are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+## Determinants
+pthrootdets_names_star <- c("betahat_star", "betaenv_true_1D_star", 
+                      "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                      "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                      "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                      "w_betaenv_FG_star")
+output_pthrootdets <- do.call(rbind, lapply(1:length(lsims_MC_B), function(k){
+  MC_means <- colMeans(lsims_MC_B[[k]])
+  cbind(do.call(cbind, lapply(pthrootdets_names_star, function(j){
+    as.numeric(MC_means[grep(paste("pthrootdets_", j, sep = ""), 
+                             colnames(lsims_MC_B[[k]]))])
+  })), ns[k])
+}))
+colnames(output_pthrootdets) <- 
+  c(paste("pthrootdets_", pthrootdets_names_star, sep = ""), "n")
+output_pthrootdets <- as.data.frame(output_pthrootdets)
+
+output_pthrootdets_long <- gather(output_pthrootdets, estimator, pthrootdet, 
+  c(pthrootdets_betahat_star, pthrootdets_betaenv_true_1D_star, 
+    pthrootdets_betaenv_fixedu_1D_star, pthrootdets_betaenv_var_1D_star, 
+    pthrootdets_w_betaenv_1D_star, pthrootdets_betaenv_true_FG_star, 
+    pthrootdets_betaenv_fixedu_FG_star, pthrootdets_betaenv_var_FG_star, 
+    pthrootdets_w_betaenv_FG_star), factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+    as.numeric(grepl("betahat", estimator)) + 
+      as.numeric(!grepl("FG", estimator))), 
+    "FG" = "0", "1D" = "1", "MLE" = "2"),
+         estimator = fct_collapse(estimator, 
+                                  MLE = c("pthrootdets_betahat_star"),
+                                  true = c("pthrootdets_betaenv_true_1D_star", 
+                                           "pthrootdets_betaenv_true_FG_star"),
+                                  fixedu = c("pthrootdets_betaenv_fixedu_1D_star", 
+                                             "pthrootdets_betaenv_fixedu_FG_star"),
+                                  varu = c("pthrootdets_betaenv_var_1D_star", 
+                                           "pthrootdets_betaenv_var_FG_star"),
+                                  weighted = c("pthrootdets_w_betaenv_1D_star", 
+                                               "pthrootdets_w_betaenv_FG_star")))
+```
+
+
+```{r logBpthroot, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_long,  
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of variances (logistic regression)') + 
+  labs(x="n", y="pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) +
+  theme(#legend.position="bottom", 
+        panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+\newpage
+```{r logBpthroot_nofixedu, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+\newpage
+Results for the ratios of the $p$th root determinants of the bootstrapped variances relative to the MLE averaged over Monte Carlo samples of are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+## Ratios of determinants
+pthrootdets_names_star <- c("betaenv_true_1D_star", 
+                      "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                      "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                      "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                      "w_betaenv_FG_star")
+output_pthrootdets_ratios <- do.call(rbind, lapply(1:length(lsims_MC_B), function(k){
+  cbind(do.call(cbind, lapply(pthrootdets_names_star, function(j){
+		mean(as.data.frame(lsims_MC_B[[k]])$pthrootdets_betahat_star / 
+				 	as.data.frame(lsims_MC_B[[k]])[, 
+					colnames(as.data.frame(lsims_MC_B[[k]])) == 
+						paste("pthrootdets_", j, sep = "")])})), ns[k])
+}))
+colnames(output_pthrootdets_ratios) <- 
+  c(paste("pthrootdets_", pthrootdets_names_star, sep = ""), "n")
+output_pthrootdets_ratios <- as.data.frame(output_pthrootdets_ratios)
+
+output_pthrootdets_ratios_long <- gather(output_pthrootdets_ratios, estimator, pthrootdet, 
+  c(pthrootdets_betaenv_true_1D_star, 
+    pthrootdets_betaenv_fixedu_1D_star, pthrootdets_betaenv_var_1D_star, 
+    pthrootdets_w_betaenv_1D_star, pthrootdets_betaenv_true_FG_star, 
+    pthrootdets_betaenv_fixedu_FG_star, pthrootdets_betaenv_var_FG_star, 
+    pthrootdets_w_betaenv_FG_star), factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+      as.numeric(!grepl("FG", estimator))), 
+    "FG" = "0", "1D" = "1"),
+         estimator = fct_collapse(estimator, 
+                                  true = c("pthrootdets_betaenv_true_1D_star", 
+                                           "pthrootdets_betaenv_true_FG_star"),
+                                  fixedu = c("pthrootdets_betaenv_fixedu_1D_star", 
+                                             "pthrootdets_betaenv_fixedu_FG_star"),
+                                  varu = c("pthrootdets_betaenv_var_1D_star", 
+                                           "pthrootdets_betaenv_var_FG_star"),
+                                  weighted = c("pthrootdets_w_betaenv_1D_star", 
+                                               "pthrootdets_w_betaenv_FG_star")))
+```
+
+
+```{r, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_ratios_long,  
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of variances (logistic regression)') + 
+  labs(x="n", y="ratios of pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) + 
+	geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+	ylim(-0.80, 20) + 
+  theme(#legend.position="bottom", 
+        panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+\newpage
+```{r, dependson="logsims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_ratios_long  %>% filter(estimator != "fixedu"),  
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="ratios of pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) + 
+	geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+	ylim(0.80, 1.75) + 
+  theme(#legend.position="bottom", 
+        panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+
+
+
+
+\newpage
+
+#### Setting C (p = 15):
+
+We provide a second set of logistic regression simulations for illustration. We load in the output from the second batch of logistic regression simulations.
+
+```{r logsims_MC_C}
+load("lsims20.RData")
+load("lsims20-2.RData")
+load("lsims20-3.RData")
+load("lsims20-4.RData")
+load("lsims20-5.RData")
+load("lsims20-6.RData")
+load("lsims20-7.RData")
+load("lsims20-8.RData")
+load("lsims20-9.RData")
+load("lsims20-10.RData")
+load("lsims20-11.RData")
+load("lsims20-12.RData")
+load("lsims20-13.RData")
+load("lsims20-14.RData")
+load("lsims20-15.RData")
+load("lsims20-16.RData")
+load("lsims20-17.RData")
+load("lsims20-18.RData")
+load("lsims20-19.RData")
+load("lsims20-20.RData")
+```
+
+
+
+The setup for this simulation is similar to the previous logistic regression simulations. One of the twenty simulation configurations is included for completeness (the others just vary in which seed was set). We first create the basis matrix $\Gamma$ for the true envelope space, the basis matrix for its orthogonal complement $\Gamma_o$, and $\beta$
+
+```{r}
+p <- 15; u <- 5
+foo <- matrix(0, nrow = p, ncol = u)
+for(j in 1:u){
+	foo[(2*(j-1)+1):(2*j),j ] <- 1
+}
+O <-qr.Q(qr(foo), complete = TRUE)
+Gamma <- O[, 1:u]
+Gamma0 <- O[, (u+1):p]
+beta <- rowSums(Gamma) / 7
+as.matrix(beta, ncol = 1)
+```
+
+We next create the core of the material and immaterial variation, denoted as $\Omega$ and $\Omega_o$ respectively, and we construct the square root of the variance matrix for the predictors.
+
+```{r}
+Omega <- diag( 2 * 1:5 ) 
+Omega0 <- diag(exp( seq(from = -7, to = -1, length = 10) ))
+SigmaX <- Gamma%*%Omega%*%t(Gamma) + Gamma0%*%Omega0%*%t(Gamma0)
+eig <- eigen(SigmaX)
+SigmaX.half <- eig$vec %*% diag(sqrt(eig$val)) %*% t(eig$vec)
+```
+
+
+We now combine the 20 pieces from our Monte Carlo simulations to estimate ratios, coverage probabilities, and distribution of the estimated envelope dimension.
+
+
+```{r}
+lsims_MC_C <- NULL
+for(j in 1:4) lsims_MC_C[[j]] <- 
+	rbind(lsims_MC[[j]], lsims_MC_2[[j]], lsims_MC_3[[j]], 
+				lsims_MC_4[[j]], lsims_MC_5[[j]], lsims_MC_6[[j]], 
+				lsims_MC_7[[j]], lsims_MC_8[[j]], lsims_MC_9[[j]], 
+				lsims_MC_10[[j]], lsims_MC_11[[j]], lsims_MC_12[[j]],
+				lsims_MC_13[[j]], lsims_MC_14[[j]], lsims_MC_15[[j]], 
+				lsims_MC_16[[j]], lsims_MC_17[[j]], lsims_MC_18[[j]], 
+				lsims_MC_19[[j]], lsims_MC_20[[j]])
+```
+
+Important sample sizes are given below.
+
+```{r}
+nMC <- 200 # Monte Carlo sample size (divided among 20 scripts)
+ns <- c(200, 400, 600, 800) # sample sizes
+nboot <- 500 # bootstrap sample size
+```
+
+
+
+
+The distribution of $u$ across bootstrap and Monte Carlo iterates is presented below. Code is included in the accompanying .Rmd file. We only consider dimensions 1-12, larger dimensions have ignorable empirical probability mass.
+
+```{r, echo = FALSE}
+names_u <- c("u_star1D", "u_starFG")
+output_udist <- do.call(rbind, lapply(1:length(lsims_MC_C), 
+  function(k){
+    MC_means <- colMeans(lsims_MC_C[[k]])
+    cbind(do.call(cbind, lapply(names_u, function(j){
+      as.numeric(MC_means[grep(j, colnames(lsims_MC_C[[k]]))])
+    })), 1:p, ns[k])
+}))
+colnames(output_udist) <- c(names_u, "comp", "n")
+output_udist <- as.data.frame(output_udist)
+output_udist_long <- gather(output_udist, estimator, dist, 
+                             c(u_star1D, u_starFG), 
+                             factor_key=TRUE)
+```
+
+
+\vspace*{0.5cm}
+```{r logCdim, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_udist_long %>% filter(comp <= 12), 
+       aes(x = n, y = dist, lty = estimator)) + 
+  ggtitle('Distribution of u (logistic regression)') + 
+  labs(x="n", y= "empirical probability") + 
+  ylim(-0.01, 0.50) + 
+  #geom_smooth(aes(x = n, y = dist), color = "black",
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = dist)) + 
+  scale_linetype_manual(
+    values=c('u_star1D'=1, 'u_starFG'=2),
+    labels = c('u 1D', 'u FG')) +
+  scale_colour_manual(name = 'Estimator:', 
+    values = c('u_star1D'='black','u_starFG'='black'),
+    labels = c('1D', 'FG')) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 4)
+```
+
+
+\newpage
+Results for ratios of bootstrap standard errors relative to the MLE are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ratio_names_star <- c("betaenv_true_1D_star", 
+                "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                "w_betaenv_FG_star")
+output_ratios <- do.call(rbind, lapply(1:length(lsims_MC_C), function(k){
+  MC_means <- colMeans(lsims_MC_C[[k]])
+  cbind(do.call(cbind, lapply(ratio_names_star, function(j){
+    as.numeric(MC_means[grep(paste("ratio_", j, sep = ""), 
+                             colnames(lsims_MC_C[[k]]))])
+  })), 1:p, ns[k])
+}))
+colnames(output_ratios) <- c(paste("ratio_", ratio_names_star, sep = ""), "comp", "n")
+output_ratios <- as.data.frame(output_ratios)
+
+output_ratios_long <- gather(output_ratios, estimator, ratio, 
+  c(ratio_betaenv_true_1D_star, ratio_betaenv_fixedu_1D_star, 
+    ratio_betaenv_var_1D_star, ratio_w_betaenv_1D_star, 
+    ratio_betaenv_true_FG_star, ratio_betaenv_fixedu_FG_star, 
+    ratio_betaenv_var_FG_star, ratio_w_betaenv_FG_star), 
+    factor_key=TRUE) %>%
+  mutate(technique = 
+  fct_collapse(as.factor(as.numeric(grepl("1D", estimator))), 
+    "1D" = "1", "FG" = "0"),
+  estimator = fct_collapse(estimator, 
+    weighted = c("ratio_w_betaenv_1D_star", 
+      "ratio_w_betaenv_FG_star"),
+    varu = c("ratio_betaenv_var_1D_star", 
+      "ratio_betaenv_var_FG_star"),
+    fixedu = c("ratio_betaenv_fixedu_1D_star", 
+      "ratio_betaenv_fixedu_FG_star"),
+    true = c("ratio_betaenv_true_1D_star", 
+      "ratio_betaenv_true_FG_star")))
+```
+
+
+```{r logCratios, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_ratios_long %>% filter(comp <= 12), 
+  aes(x = n, y = ratio, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of ratios (logistic regression)') + 
+  labs(x="n", y="ratio of standard errors") + 
+  #geom_smooth(aes(x = n, y = ratio), 
+  #            size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = ratio)) +
+  geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 4)
+```
+
+
+\newpage
+```{r logCratios_nofixedu, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_ratios_long %>% filter(estimator != "fixedu", comp <= 12), 
+       aes(x = n, y = ratio, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="ratio of standard errors") + 
+  #geom_smooth(aes(x = n, y = ratio), 
+  #            size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = ratio)) +
+  geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 4)
+```
+
+
+\newpage
+```{r logCratios_nofixedu_and1D, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_ratios_long %>% filter(!(estimator == "fixedu" & technique == "1D"), comp <= 12), 
+       aes(x = n, y = ratio, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u with 1D algorithm excluded)') + 
+  labs(x="n", y="ratio of standard errors") + 
+  #geom_smooth(aes(x = n, y = ratio), 
+  #            size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = ratio)) +
+  geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 4)
+```
+
+
+
+
+\newpage 
+Results for univariate coverage probabilities are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+## Coverages
+coverages_names_star <- c("betahat_star", "betaenv_true_1D_star", 
+                      "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                      "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                      "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                      "w_betaenv_FG_star")
+output_coverages <- do.call(rbind, lapply(1:length(lsims_MC_C), function(k){
+  MC_means <- colMeans(lsims_MC_C[[k]])
+  cbind(do.call(cbind, lapply(coverages_names_star, function(j){
+    as.numeric(MC_means[grep(paste("coverages_", j, sep = ""), 
+                             colnames(lsims_MC_C[[k]]))])
+  })), 1:p, ns[k])
+}))
+colnames(output_coverages) <- 
+  c(paste("coverages_", coverages_names_star, sep = ""), "comp", "n")
+output_coverages <- as.data.frame(output_coverages)
+
+output_coverages_long <- gather(output_coverages, estimator, coverage, 
+  c(coverages_betahat_star, coverages_betaenv_true_1D_star, 
+    coverages_betaenv_fixedu_1D_star, coverages_betaenv_var_1D_star, 
+    coverages_w_betaenv_1D_star, coverages_betaenv_true_FG_star, 
+    coverages_betaenv_fixedu_FG_star, coverages_betaenv_var_FG_star, 
+    coverages_w_betaenv_FG_star), 
+  factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+    as.numeric(grepl("betahat", estimator)) + 
+    as.numeric(!grepl("FG", estimator))), 
+      "FG" = "0", "1D" = "1", "MLE" = "2"),
+         estimator = fct_collapse(estimator, 
+          MLE = c("coverages_betahat_star"),
+          true = c("coverages_betaenv_true_1D_star", 
+            "coverages_betaenv_true_FG_star"),
+          fixedu = c("coverages_betaenv_fixedu_1D_star", 
+            "coverages_betaenv_fixedu_FG_star"),
+          varu = c("coverages_betaenv_var_1D_star", 
+            "coverages_betaenv_var_FG_star"),
+          weighted = c("coverages_w_betaenv_1D_star", 
+            "coverages_w_betaenv_FG_star")))
+```
+
+
+```{r logCcov, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_coverages_long,  
+       aes(x = n, y = coverage, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of coverage probabilities (logistic regression)') + 
+  labs(x="n", y="coverage probability") + 
+  #geom_smooth(aes(x = n, y = coverage), 
+  #            size = 0.75, method = "lm", formula = y ~ x, # + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = coverage)) +
+  geom_abline(intercept = 0.95, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+\newpage
+```{r, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_coverages_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = coverage, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="coverage probability") + 
+  #geom_smooth(aes(x = n, y = coverage), 
+  #            size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = coverage)) +
+  geom_abline(intercept = 0.95, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+
+\newpage
+
+We now take a closer look at the first component. We see that the fixed $u$ estimation regime demonstrates worrisome under coverage when using either the FG or 1D algorithms. Other regimes also demonstrate undercoverage for this component, but the problem is not as dramatic as it is for the fixed $u$ regime. 
+
+```{r logCcov2, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_coverages_long %>% filter(comp == 1),  
+       aes(x = n, y = coverage, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of coverage probabilities (logistic regression)') + 
+  labs(x="n", y="coverage probability") + 
+  #geom_smooth(aes(x = n, y = coverage), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = coverage)) +
+  geom_abline(intercept = 0.95, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+
+\newpage
+Results for the MSE of the averaged over Monte Carlo samples of are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+MSE_names_star <- c("betahat_star", "betaenv_true_1D_star", 
+                            "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                            "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                            "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                            "w_betaenv_FG_star")
+output_MSE <- do.call(rbind, lapply(1:length(lsims_MC_C), function(k){
+  MC_means <- colMeans(lsims_MC_C[[k]])
+  cbind(do.call(cbind, lapply(MSE_names_star, function(j){
+    as.numeric(MC_means[grep(paste("MSE_", j, sep = ""), 
+                             colnames(lsims_MC_C[[k]]))])
+  })), ns[k])
+}))
+colnames(output_MSE) <- 
+  c(paste("MSE_", MSE_names_star, sep = ""), "n")
+output_MSE <- as.data.frame(output_MSE)
+
+output_MSE_long <- gather(output_MSE, estimator, MSE, 
+                                  c(MSE_betahat_star, MSE_betaenv_true_1D_star, 
+                                    MSE_betaenv_fixedu_1D_star, MSE_betaenv_var_1D_star, 
+                                    MSE_w_betaenv_1D_star, MSE_betaenv_true_FG_star, 
+                                    MSE_betaenv_fixedu_FG_star, MSE_betaenv_var_FG_star, 
+                                    MSE_w_betaenv_FG_star), factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+    as.numeric(grepl("betahat", estimator)) + 
+      as.numeric(!grepl("FG", estimator))), 
+    "FG" = "0", "1D" = "1", "MLE" = "2"),
+    estimator = fct_collapse(estimator, 
+                             MLE = c("MSE_betahat_star"),
+                             true = c("MSE_betaenv_true_1D_star", 
+                                      "MSE_betaenv_true_FG_star"),
+                             fixedu = c("MSE_betaenv_fixedu_1D_star", 
+                                        "MSE_betaenv_fixedu_FG_star"),
+                             varu = c("MSE_betaenv_var_1D_star", 
+                                      "MSE_betaenv_var_FG_star"),
+                             weighted = c("MSE_w_betaenv_1D_star", 
+                                          "MSE_w_betaenv_FG_star")))
+```
+
+
+```{r logCMSE, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_MSE_long, #%>% filter(estimator != "fixedu"), 
+       aes(x = n, y = MSE, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of MSE') + 
+  labs(x="n", y="MSE of parameter estimation") + 
+  #geom_smooth(aes(x = n, y = MSE), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = MSE)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+\newpage
+```{r logCMSE_nofixedu, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_MSE_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = MSE, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="MSE of parameter estimation") + 
+  #geom_smooth(aes(x = n, y = MSE), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = MSE)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+\newpage 
+Results for the $p$th root determinants of the bootstrapped variances averaged over Monte Carlo samples of are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+## Determinants
+pthrootdets_names_star <- c("betahat_star", "betaenv_true_1D_star", 
+                      "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                      "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                      "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                      "w_betaenv_FG_star")
+output_pthrootdets <- do.call(rbind, lapply(1:length(lsims_MC_C), function(k){
+  MC_means <- colMeans(lsims_MC_C[[k]])
+  cbind(do.call(cbind, lapply(pthrootdets_names_star, function(j){
+    as.numeric(MC_means[grep(paste("pthrootdets_", j, sep = ""), 
+                             colnames(lsims_MC_C[[k]]))])
+  })), ns[k])
+}))
+colnames(output_pthrootdets) <- 
+  c(paste("pthrootdets_", pthrootdets_names_star, sep = ""), "n")
+output_pthrootdets <- as.data.frame(output_pthrootdets)
+
+output_pthrootdets_long <- gather(output_pthrootdets, estimator, pthrootdet, 
+  c(pthrootdets_betahat_star, pthrootdets_betaenv_true_1D_star, 
+    pthrootdets_betaenv_fixedu_1D_star, pthrootdets_betaenv_var_1D_star, 
+    pthrootdets_w_betaenv_1D_star, pthrootdets_betaenv_true_FG_star, 
+    pthrootdets_betaenv_fixedu_FG_star, pthrootdets_betaenv_var_FG_star, 
+    pthrootdets_w_betaenv_FG_star), factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+    as.numeric(grepl("betahat", estimator)) + 
+      as.numeric(!grepl("FG", estimator))), 
+    "FG" = "0", "1D" = "1", "MLE" = "2"),
+         estimator = fct_collapse(estimator, 
+                                  MLE = c("pthrootdets_betahat_star"),
+                                  true = c("pthrootdets_betaenv_true_1D_star", 
+                                           "pthrootdets_betaenv_true_FG_star"),
+                                  fixedu = c("pthrootdets_betaenv_fixedu_1D_star", 
+                                             "pthrootdets_betaenv_fixedu_FG_star"),
+                                  varu = c("pthrootdets_betaenv_var_1D_star", 
+                                           "pthrootdets_betaenv_var_FG_star"),
+                                  weighted = c("pthrootdets_w_betaenv_1D_star", 
+                                               "pthrootdets_w_betaenv_FG_star")))
+```
+
+
+```{r, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_long,  
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of variances (logistic regression)') + 
+  labs(x="n", y="pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+\newpage
+```{r, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+
+\newpage
+Results for the ratios of the pth root determinants of the bootstrapped variances relative to the MLE averaged over Monte Carlo samples of are depicted here and on the next page.
+
+```{r, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+## Ratios of determinants
+pthrootdets_names_star <- c("betaenv_true_1D_star", 
+                      "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                      "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                      "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                      "w_betaenv_FG_star")
+output_pthrootdets_ratios <- do.call(rbind, lapply(1:length(lsims_MC_C), function(k){
+  cbind(do.call(cbind, lapply(pthrootdets_names_star, function(j){
+		mean(as.data.frame(lsims_MC_C[[k]])$pthrootdets_betahat_star / 
+				 	as.data.frame(lsims_MC_C[[k]])[, 
+					colnames(as.data.frame(lsims_MC_C[[k]])) == 
+						paste("pthrootdets_", j, sep = "")])})), ns[k])
+}))
+colnames(output_pthrootdets_ratios) <- 
+  c(paste("pthrootdets_", pthrootdets_names_star, sep = ""), "n")
+output_pthrootdets_ratios <- as.data.frame(output_pthrootdets_ratios)
+
+output_pthrootdets_ratios_long <- gather(output_pthrootdets_ratios, estimator, pthrootdet, 
+  c(pthrootdets_betaenv_true_1D_star, 
+    pthrootdets_betaenv_fixedu_1D_star, pthrootdets_betaenv_var_1D_star, 
+    pthrootdets_w_betaenv_1D_star, pthrootdets_betaenv_true_FG_star, 
+    pthrootdets_betaenv_fixedu_FG_star, pthrootdets_betaenv_var_FG_star, 
+    pthrootdets_w_betaenv_FG_star), factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+      as.numeric(!grepl("FG", estimator))), 
+    "FG" = "0", "1D" = "1"),
+         estimator = fct_collapse(estimator, 
+                                  true = c("pthrootdets_betaenv_true_1D_star", 
+                                           "pthrootdets_betaenv_true_FG_star"),
+                                  fixedu = c("pthrootdets_betaenv_fixedu_1D_star", 
+                                             "pthrootdets_betaenv_fixedu_FG_star"),
+                                  varu = c("pthrootdets_betaenv_var_1D_star", 
+                                           "pthrootdets_betaenv_var_FG_star"),
+                                  weighted = c("pthrootdets_w_betaenv_1D_star", 
+                                               "pthrootdets_w_betaenv_FG_star")))
+```
+
+
+```{r, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_ratios_long,  
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of variances (logistic regression)') + 
+  labs(x="n", y="ratios of pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) + 
+	geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(#legend.position="bottom", 
+        panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+\newpage
+```{r, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_ratios_long  %>% filter(estimator != "fixedu"),  
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="ratios of pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) + 
+	geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+### Poisson regression simulations
+
+We now provide the Poisson regression simulation in the main text. The simulation output is loaded.
+
+```{r poissims_MC_B, cache = TRUE}
+load("psimsB.RData")
+load("psimsB-2.RData")
+load("psimsB-3.RData")
+load("psimsB-4.RData")
+```
+
+
+The setup for these simulations are similar to the logistic regression simulations in the previous sections. The specific configurations are again included for completeness. We first create the basis matrix $\Gamma$ for the true envelope space and the basis matrix for its orthogonal complement $\Gamma_o$.
+
+```{r}
+p <- 6; u <- 3
+init <- rep(1, 6)
+v1 <- matrix(init, nrow = p)
+O <-qr.Q(qr(v1), complete = TRUE)
+Gamma <- O[, 1:u]
+Gamma0 <- O[, (u+1):p]
+```
+
+We next create the core of the material and immaterial variation, denoted as $\Omega$ and $\Omega_o$ respectively.
+
+```{r}
+Omega <- diag(exp(c(0,1,2))) 
+Omega0 <- diag(exp(c(-4,-3,-1)))
+```
+
+We now build the variance matrix of the predictor variables and construct the true canonical parameter vector (regression coefficient vector) as an element contained in $\text{span}(\Gamma)$.
+
+```{r}
+SigmaX <- Gamma%*%Omega%*%t(Gamma) + Gamma0%*%Omega0%*%t(Gamma0)
+eig <- eigen(SigmaX)
+SigmaX.half <- eig$vec %*% diag(sqrt(eig$val)) %*% t(eig$vec)
+beta <- -(5*Gamma[, 1] + 5*Gamma[, 2] + Gamma[, 3]) / 10
+as.matrix(beta, ncol = 1)
+```
+
+We now combine the four separate Monte Carlo simulations to estimate ratios, coverage probabilities, and distribution of the estimated envelope dimension.
+
+
+```{r, dependson="poissims_MC_B", cache = TRUE}
+for(j in 1:4) psims_MC_B[[j]] <- 
+	rbind(psims_MC_B[[j]], psims_MC_B_2[[j]], 
+				psims_MC_B_3[[j]], psims_MC_B_4[[j]])
+```
+
+Important sample sizes are given below.
+
+```{r}
+nMC <- 400 # Monte Carlo sample size
+ns <- c(200, 400, 600, 800) # sample sizes
+nboot <- 1e3 # bootstrap sample size
+```
+
+The distribution of $u$ across bootstrap and Monte Carlo iterates is presented below. Code is included in the accompanying .Rmd file.
+
+```{r, dependson="poissims_MC_B", cache = TRUE, echo = FALSE}
+names_u <- c("u_star1D", "u_starFG")
+output_udist <- do.call(rbind, lapply(1:length(psims_MC_B), 
+  function(k){
+    MC_means <- colMeans(psims_MC_B[[k]])
+    cbind(do.call(cbind, lapply(names_u, function(j){
+      as.numeric(MC_means[grep(j, colnames(psims_MC_B[[k]]))])
+    })), 1:p, ns[k])
+}))
+colnames(output_udist) <- c(names_u, "comp", "n")
+output_udist <- as.data.frame(output_udist)
+output_udist_long <- gather(output_udist, estimator, dist, 
+                             c(u_star1D, u_starFG), 
+                             factor_key=TRUE)
+```
+
+\vspace*{0.5cm}
+
+```{r pois_dim, dependson="poissims_MC_B", cache = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_udist_long, 
+       aes(x = n, y = dist, lty = estimator)) + 
+  ggtitle('Distribution of u (Poisson regression)') + 
+  labs(x="n", y= "empirical probability") + 
+  ylim(-0.01, 1) + 
+	geom_line() +
+  #geom_smooth(aes(x = n, y = dist), color = "black",
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+  scale_linetype_manual(
+    values=c('u_star1D'=1, 'u_starFG'=2),
+    labels = c('u 1D', 'u FG')) +
+  scale_colour_manual(name = 'Estimator:', 
+    values = c('u_star1D'='black','u_starFG'='black'),
+    labels = c('1D', 'FG')) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+\newpage
+Results for ratios of bootstrap standard errors relative to the MLE are depicted here and on the next page.
+
+```{r, dependson="poissims_MC_B", cache = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+ratio_names_star <- c("betaenv_true_1D_star", 
+                "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                "w_betaenv_FG_star")
+output_ratios <- do.call(rbind, lapply(1:length(psims_MC_B), function(k){
+  MC_means <- colMeans(psims_MC_B[[k]])
+  cbind(do.call(cbind, lapply(ratio_names_star, function(j){
+    as.numeric(MC_means[grep(paste("ratio_", j, sep = ""), 
+                             colnames(psims_MC_B[[k]]))])
+  })), 1:p, ns[k])
+}))
+colnames(output_ratios) <- c(paste("ratio_", ratio_names_star, sep = ""), "comp", "n")
+output_ratios <- as.data.frame(output_ratios)
+
+output_ratios_long <- gather(output_ratios, estimator, ratio, 
+  c(ratio_betaenv_true_1D_star, ratio_betaenv_fixedu_1D_star, 
+    ratio_betaenv_var_1D_star, ratio_w_betaenv_1D_star, 
+    ratio_betaenv_true_FG_star, ratio_betaenv_fixedu_FG_star, 
+    ratio_betaenv_var_FG_star, ratio_w_betaenv_FG_star), 
+    factor_key=TRUE) %>%
+  mutate(technique = 
+  fct_collapse(as.factor(as.numeric(grepl("1D", estimator))), 
+    "1D" = "1", "FG" = "0"),
+  estimator = fct_collapse(estimator, 
+    weighted = c("ratio_w_betaenv_1D_star", 
+      "ratio_w_betaenv_FG_star"),
+    varu = c("ratio_betaenv_var_1D_star", 
+      "ratio_betaenv_var_FG_star"),
+    fixedu = c("ratio_betaenv_fixedu_1D_star", 
+      "ratio_betaenv_fixedu_FG_star"),
+    true = c("ratio_betaenv_true_1D_star", 
+      "ratio_betaenv_true_FG_star")))
+```
+
+
+```{r pois_ratios, dependson="poissims_MC", cache = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_ratios_long, 
+  aes(x = n, y = ratio, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of ratios (Poisson regression)') + 
+  labs(x="n", y="ratio of standard errors") + 
+  #geom_smooth(aes(x = n, y = ratio), 
+  #            size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = ratio)) +
+  geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+\newpage
+```{r pois_ratios_nofixedu, dependson="poissims_MC_B", cache = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_ratios_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = ratio, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="ratio of standard errors") + 
+  #geom_smooth(aes(x = n, y = ratio), 
+  #            size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = ratio)) +
+  geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+\newpage 
+Results for univariate coverage probabilities are depicted here and on the next page.
+
+```{r, dependson="poissims_MC_B", cache = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+## Coverages
+coverages_names_star <- c("betahat_star", "betaenv_true_1D_star", 
+                      "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                      "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                      "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                      "w_betaenv_FG_star")
+output_coverages <- do.call(rbind, lapply(1:length(psims_MC_B), function(k){
+  MC_means <- colMeans(psims_MC_B[[k]])
+  cbind(do.call(cbind, lapply(coverages_names_star, function(j){
+    as.numeric(MC_means[grep(paste("coverages_", j, sep = ""), 
+                             colnames(psims_MC_B[[k]]))])
+  })), 1:p, ns[k])
+}))
+colnames(output_coverages) <- 
+  c(paste("coverages_", coverages_names_star, sep = ""), "comp", "n")
+output_coverages <- as.data.frame(output_coverages)
+
+output_coverages_long <- gather(output_coverages, estimator, coverage, 
+  c(coverages_betahat_star, coverages_betaenv_true_1D_star, 
+    coverages_betaenv_fixedu_1D_star, coverages_betaenv_var_1D_star, 
+    coverages_w_betaenv_1D_star, coverages_betaenv_true_FG_star, 
+    coverages_betaenv_fixedu_FG_star, coverages_betaenv_var_FG_star, 
+    coverages_w_betaenv_FG_star), 
+  factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+    as.numeric(grepl("betahat", estimator)) + 
+    as.numeric(!grepl("FG", estimator))), 
+      "FG" = "0", "1D" = "1", "MLE" = "2"),
+         estimator = fct_collapse(estimator, 
+          MLE = c("coverages_betahat_star"),
+          true = c("coverages_betaenv_true_1D_star", 
+            "coverages_betaenv_true_FG_star"),
+          fixedu = c("coverages_betaenv_fixedu_1D_star", 
+            "coverages_betaenv_fixedu_FG_star"),
+          varu = c("coverages_betaenv_var_1D_star", 
+            "coverages_betaenv_var_FG_star"),
+          weighted = c("coverages_w_betaenv_1D_star", 
+            "coverages_w_betaenv_FG_star")))
+```
+
+
+```{r pois_cov, dependson="poissims_MC_B", cache = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_coverages_long,  
+       aes(x = n, y = coverage, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of coverage probabilities (Poisson regression)') + 
+  labs(x="n", y="coverage probability") + 
+  #geom_smooth(aes(x = n, y = coverage), 
+  #            size = 0.75, method = "lm", formula = y ~ x, # + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = coverage)) +
+  geom_abline(intercept = 0.95, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+\newpage
+```{r, dependson="poissims_MC_B", cache = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_coverages_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = coverage, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="coverage probability") + 
+  #geom_smooth(aes(x = n, y = coverage), 
+  #            size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = coverage)) +
+  geom_abline(intercept = 0.95, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 3)
+```
+
+
+\newpage
+Results for the MSE of the averaged over Monte Carlo samples of are depicted here and on the next page.
+
+```{r, dependson="poissims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+MSE_names_star <- c("betahat_star", "betaenv_true_1D_star", 
+                            "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                            "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                            "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                            "w_betaenv_FG_star")
+output_MSE <- do.call(rbind, lapply(1:length(psims_MC_B), function(k){
+  MC_means <- colMeans(psims_MC_B[[k]])
+  cbind(do.call(cbind, lapply(MSE_names_star, function(j){
+    as.numeric(MC_means[grep(paste("MSE_", j, sep = ""), 
+                             colnames(psims_MC_B[[k]]))])
+  })), ns[k])
+}))
+colnames(output_MSE) <- 
+  c(paste("MSE_", MSE_names_star, sep = ""), "n")
+output_MSE <- as.data.frame(output_MSE)
+
+output_MSE_long <- gather(output_MSE, estimator, MSE, 
+                                  c(MSE_betahat_star, MSE_betaenv_true_1D_star, 
+                                    MSE_betaenv_fixedu_1D_star, MSE_betaenv_var_1D_star, 
+                                    MSE_w_betaenv_1D_star, MSE_betaenv_true_FG_star, 
+                                    MSE_betaenv_fixedu_FG_star, MSE_betaenv_var_FG_star, 
+                                    MSE_w_betaenv_FG_star), factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+    as.numeric(grepl("betahat", estimator)) + 
+      as.numeric(!grepl("FG", estimator))), 
+    "FG" = "0", "1D" = "1", "MLE" = "2"),
+    estimator = fct_collapse(estimator, 
+                             MLE = c("MSE_betahat_star"),
+                             true = c("MSE_betaenv_true_1D_star", 
+                                      "MSE_betaenv_true_FG_star"),
+                             fixedu = c("MSE_betaenv_fixedu_1D_star", 
+                                        "MSE_betaenv_fixedu_FG_star"),
+                             varu = c("MSE_betaenv_var_1D_star", 
+                                      "MSE_betaenv_var_FG_star"),
+                             weighted = c("MSE_w_betaenv_1D_star", 
+                                          "MSE_w_betaenv_FG_star")))
+```
+
+
+```{r poisBMSE, dependson="poissims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_MSE_long, #%>% filter(estimator != "fixedu"), 
+       aes(x = n, y = MSE, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of MSE') + 
+  labs(x="n", y="MSE of parameter estimation") + 
+  #geom_smooth(aes(x = n, y = MSE), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = MSE)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+\newpage
+```{r poisBMSE_nofixedu, dependson="poissims_MC_B", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_MSE_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = MSE, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="MSE of parameter estimation") + 
+  #geom_smooth(aes(x = n, y = MSE), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+  geom_line(aes(x = n, y = MSE)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+\newpage 
+Results for the $p$th root determinants of the bootstrapped variances averaged over Monte Carlo samples of are depicted here and on the next page.
+
+```{r, dependson="poissims_MC_B", cache = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+## Determinants
+pthrootdets_names_star <- c("betahat_star", "betaenv_true_1D_star", 
+                      "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                      "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                      "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                      "w_betaenv_FG_star")
+output_pthrootdets <- do.call(rbind, lapply(1:length(psims_MC_B), function(k){
+  MC_means <- colMeans(psims_MC_B[[k]])
+  cbind(do.call(cbind, lapply(pthrootdets_names_star, function(j){
+    as.numeric(MC_means[grep(paste("pthrootdets_", j, sep = ""), 
+                             colnames(psims_MC_B[[k]]))])
+  })), ns[k])
+}))
+colnames(output_pthrootdets) <- 
+  c(paste("pthrootdets_", pthrootdets_names_star, sep = ""), "n")
+output_pthrootdets <- as.data.frame(output_pthrootdets)
+
+output_pthrootdets_long <- gather(output_pthrootdets, estimator, pthrootdet, 
+  c(pthrootdets_betahat_star, pthrootdets_betaenv_true_1D_star, 
+    pthrootdets_betaenv_fixedu_1D_star, pthrootdets_betaenv_var_1D_star, 
+    pthrootdets_w_betaenv_1D_star, pthrootdets_betaenv_true_FG_star, 
+    pthrootdets_betaenv_fixedu_FG_star, pthrootdets_betaenv_var_FG_star, 
+    pthrootdets_w_betaenv_FG_star), factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+    as.numeric(grepl("betahat", estimator)) + 
+      as.numeric(!grepl("FG", estimator))), 
+    "FG" = "0", "1D" = "1", "MLE" = "2"),
+         estimator = fct_collapse(estimator, 
+                                  MLE = c("pthrootdets_betahat_star"),
+                                  true = c("pthrootdets_betaenv_true_1D_star", 
+                                           "pthrootdets_betaenv_true_FG_star"),
+                                  fixedu = c("pthrootdets_betaenv_fixedu_1D_star", 
+                                             "pthrootdets_betaenv_fixedu_FG_star"),
+                                  varu = c("pthrootdets_betaenv_var_1D_star", 
+                                           "pthrootdets_betaenv_var_FG_star"),
+                                  weighted = c("pthrootdets_w_betaenv_1D_star", 
+                                               "pthrootdets_w_betaenv_FG_star")))
+```
+
+
+```{r, dependson="poissims_MC_B", cache = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_long,  
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of variances (Poisson regression)') + 
+  labs(x="n", y="pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+\newpage
+```{r, dependson="poissims_MC_B", cache = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) +
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+\newpage
+Results for the ratios of the pth root determinants of the bootstrapped variances relative to the MLE averaged over Monte Carlo samples of are depicted here and on the next page.
+
+```{r, dependson="poissims_MC_B", cache = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+## Ratios of determinants
+pthrootdets_names_star <- c("betaenv_true_1D_star", 
+                      "betaenv_fixedu_1D_star", "betaenv_var_1D_star", 
+                      "w_betaenv_1D_star", "betaenv_true_FG_star", 
+                      "betaenv_fixedu_FG_star", "betaenv_var_FG_star", 
+                      "w_betaenv_FG_star")
+output_pthrootdets_ratios <- do.call(rbind, lapply(1:length(psims_MC_B), function(k){
+  cbind(do.call(cbind, lapply(pthrootdets_names_star, function(j){
+		mean(as.data.frame(psims_MC_B[[k]])$pthrootdets_betahat_star / 
+				 	as.data.frame(psims_MC_B[[k]])[, 
+					colnames(as.data.frame(psims_MC_B[[k]])) == 
+						paste("pthrootdets_", j, sep = "")])})), ns[k])
+}))
+colnames(output_pthrootdets_ratios) <- 
+  c(paste("pthrootdets_", pthrootdets_names_star, sep = ""), "n")
+output_pthrootdets_ratios <- as.data.frame(output_pthrootdets_ratios)
+
+output_pthrootdets_ratios_long <- gather(output_pthrootdets_ratios, estimator, pthrootdet, 
+  c(pthrootdets_betaenv_true_1D_star, 
+    pthrootdets_betaenv_fixedu_1D_star, pthrootdets_betaenv_var_1D_star, 
+    pthrootdets_w_betaenv_1D_star, pthrootdets_betaenv_true_FG_star, 
+    pthrootdets_betaenv_fixedu_FG_star, pthrootdets_betaenv_var_FG_star, 
+    pthrootdets_w_betaenv_FG_star), factor_key=TRUE) %>%
+  mutate(technique = fct_collapse(as.factor(
+      as.numeric(!grepl("FG", estimator))), 
+    "FG" = "0", "1D" = "1"),
+         estimator = fct_collapse(estimator, 
+                                  true = c("pthrootdets_betaenv_true_1D_star", 
+                                           "pthrootdets_betaenv_true_FG_star"),
+                                  fixedu = c("pthrootdets_betaenv_fixedu_1D_star", 
+                                             "pthrootdets_betaenv_fixedu_FG_star"),
+                                  varu = c("pthrootdets_betaenv_var_1D_star", 
+                                           "pthrootdets_betaenv_var_FG_star"),
+                                  weighted = c("pthrootdets_w_betaenv_1D_star", 
+                                               "pthrootdets_w_betaenv_FG_star")))
+```
+
+
+```{r, dependson="poissims_MC_B", cache = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_pthrootdets_ratios_long,  
+       aes(x = n, y = pthrootdet, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of variances (Poisson regression)') + 
+	ylim(0, 10) + 
+  labs(x="n", y="ratios of pth root of determinant of variance") + 
+  #geom_smooth(aes(x = n, y = pthrootdet), 
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = pthrootdet)) + 
+	geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))
+```
+
+
+
+
+
+
+\newpage
+### Diabetes example 
+
+Model free envelope estimation techniques and maximum likelihood estimation are then used to estimate the canonical parameter vector corresponding to a logistic regression model (the regression coefficient vector with inverse logit link function) for diabetes diagnoses. 
+
+We load in the `diabetes` data from the `faraway` package.  Log transformations are used for several predictor variables as a means to transform the variable to approximate normality while maintaining a scale that is interpretable. The response variable is a diagnosis of diabetes based in an individual's hemoglobin percentage (HbA1c). A positive diagnosis is when HbA1c $> 6.5\%$. Only complete records are kept for this analysis.
+
+```{r loaddata, message = FALSE, cache = TRUE}
+data(diabetes)
+## add diagnosis and roughly transform predictors to univariate 
+## normality
+dat <- diabetes %>% 
+  mutate(diagnose = ifelse(glyhb > 6.5,1,0)) %>%
+  mutate(l.stab.glu = log(stab.glu), l.weight = log(weight), 
+         l.age = log(age), l.hip = log(hip), l.waist = log(waist), 
+         l.height = log(height)) %>% 
+  ## taking out gender
+  dplyr::select(diagnose, l.age, l.weight, l.height, l.waist, 
+                l.hip, l.stab.glu, gender)
+## exclude missing observations
+dat <- na.omit(dat)
+## turn gender to factor variable
+dat$gender <- as.factor(dat$gender)
+```
+
+Here are density plots of the log transformed predictor variables.
+
+```{r trimdata, cache = TRUE, dependson = "loaddata"}
+dat %>% dplyr::select(-diagnose) %>% keep(is.numeric) %>%  
+  gather() %>% ggplot(aes(value)) +
+  facet_wrap(~ key, scales = "free") +
+  theme_minimal() + 
+  geom_density()
+```
+
+We now fit the model with diagnosis as a response variable and log transformed versions of age, weight, height, waist, hip, and stabilized glucose as predictors.  
+
+```{r model, results="asis", cache = TRUE, dependson = "trimdata"}
+m1 <- glm(diagnose ~ ., family = "binomial", data = dat, 
+          x = TRUE, y = TRUE)
+betahat <- m1$coefficients
+p <- length(betahat) 
+n <- nrow(dat)
+xtable(summary(m1))
+```
+
+We now perform the nonparametric bootstrap procedure for all envelope estimators mentioned in the main text and the MLE. This nonparametric bootstrap has a bootstrap sample size of $1000$.  
+
+```{r diabetesboot, cache = TRUE, dependson = "model"}
+set.seed(13)
+nboot <- 5e3
+RNGkind("L'Ecuyer-CMRG")
+system.time(boot_sample_diabetes <- model_boot(model = m1, 
+  nboot = nboot, numCores = numCores, intercept = TRUE))
+```
+
+The distribution of the estimated dimension across bootstrap iterations is depicted below. A non-trivial amount of model selection volatility exists across iterations of our nonparametric bootstrap.
+
+```{r}
+## 1D algorithm
+round(table(boot_sample_diabetes[, 4*(p-1)+1]) / nboot, 3)
+
+## FG optimization
+round(table(boot_sample_diabetes[, 7*(p-1)+2]) / nboot, 3)
+```
+
+
+
+We now replicate Table 2 in the main text. This table displays the ratios of bootstrap standard errors. These ratios compare the MLE to the envelope estimators under study. The bootstrap standard error for the MLE is displayed in the numerator, so that a value greater than 1 indicate variance reduction via envelope methodology.
+
+
+
+```{r, results = "asis"}
+# variances
+var_MLE <- var(boot_sample_diabetes[, 1:(p-1)])
+var_fixedu_1D <- var(boot_sample_diabetes[, (p-1+1):(2*(p-1))])
+var_varu_1D <- var(boot_sample_diabetes[, (2*(p-1)+1):(3*(p-1))])
+var_wt_1D <- var(boot_sample_diabetes[, (3*(p-1)+1):(4*(p-1))])
+var_fixedu_FG <- var(boot_sample_diabetes[, (4*(p-1)+2):(5*(p-1)+1)])
+var_varu_FG <- var(boot_sample_diabetes[, (5*(p-1)+2):(6*(p-1)+1)])
+var_wt_FG <- var(boot_sample_diabetes[, (6*(p-1)+2):(7*(p-1)+1)])
+
+# standard errors
+SE_MLE <- sqrt(diag(var_MLE))
+SE_fixedu_1D <- sqrt(diag(var_fixedu_1D))
+SE_varu_1D <- sqrt(diag(var_varu_1D))
+SE_wt_1D <- sqrt(diag(var_wt_1D))
+SE_fixedu_FG <- sqrt(diag(var_fixedu_FG))
+SE_varu_FG <- sqrt(diag(var_varu_FG))
+SE_wt_FG <- sqrt(diag(var_wt_FG))
+
+# ratios
+ratio_fixedu_1D <- SE_MLE / SE_fixedu_1D
+ratio_varu_1D <- SE_MLE / SE_varu_1D
+ratio_wt_1D <- SE_MLE / SE_wt_1D
+ratio_fixedu_FG <- SE_MLE / SE_fixedu_FG
+ratio_varu_FG <- SE_MLE / SE_varu_FG
+ratio_wt_FG <- SE_MLE / SE_wt_FG
+
+# table of ratios
+ratios_diabetes <- cbind(ratio_fixedu_1D, 
+  ratio_varu_1D, ratio_wt_1D, ratio_fixedu_FG, 
+  ratio_varu_FG, ratio_wt_FG)
+xtable(ratios_diabetes, digits = 3)
+```
+
+
+<!-- Here are ratios of geometric means of the eigenvalues. -->
+
+<!-- ```{r} -->
+<!-- ## 1D algorithm with u fixed -->
+<!-- geoMean(eigen(var_MLE)$val) / geoMean(eigen(var_fixedu_1D)$val) -->
+<!-- ## 1D algorithm with u variable -->
+<!-- geoMean(eigen(var_MLE)$val) / geoMean(eigen(var_varu_1D)$val) -->
+<!-- ## weighted estimation with the 1D algorithm  -->
+<!-- geoMean(eigen(var_MLE)$val) / geoMean(eigen(var_wt_1D)$val) -->
+<!-- ## weighted compared to variable u when using the 1D algorithm -->
+<!-- geoMean(eigen(var_varu_1D)$val) / geoMean(eigen(var_wt_1D)$val) -->
+
+<!-- ## FG optimization with u fixed -->
+<!-- geoMean(eigen(var_MLE)$val) / geoMean(eigen(var_fixedu_FG)$val) -->
+<!-- ## FG optimization with u variable -->
+<!-- geoMean(eigen(var_MLE)$val) / geoMean(eigen(var_varu_FG)$val) -->
+<!-- ## weighted estimation with FG optimization -->
+<!-- geoMean(eigen(var_MLE)$val) / geoMean(eigen(var_wt_FG)$val) -->
+<!-- ## weighted compared to variable u when using FG optimization -->
+<!-- geoMean(eigen(var_varu_FG)$val) / geoMean(eigen(var_wt_FG)$val) -->
+<!-- ``` -->
+
+The estimated envelope dimension is displayed in the code below. We can see that the estimated envelope dimension is 1 in the original sample, and the vector of weights is close to a point mass at 1. That being said, the bootstrap distribution for the estimated envelope dimension $u$ is far from a point mass at 1 and the bootstrap standard errors for the weighted envelope estimator are lower than those obtained by using the variable $u$ approach which selects $u$ at every dimension. 
+
+```{r inference, message = FALSE, warning = FALSE, cache = TRUE, dependson = "diabetesboot"}
+X <- m1$x; Y <- m1$y
+log_fit <- Logistic_cov(Y=Y, X=X[, -1], a=coef(m1)[1], b=coef(m1)[-1])
+M <- log_fit$M; U <- log_fit$U
+u1D_fit <- oneD_bic(M = M, U = U, n = n, maxdim = p-1)$u
+uFG_fit <- FG_bic(M = M, U = U, n = n)
+u1D_fit; uFG_fit
+```
+	
+
+
+
+
+\bibliographystyle{plainnat}
+\bibliography{envelopesources}
+
