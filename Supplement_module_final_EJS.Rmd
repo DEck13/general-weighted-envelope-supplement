@@ -199,8 +199,8 @@ Our numerical simulations begin with envelope estimation in logistic regression 
 We provide a second set of logistic regression simulations for illustration. We load in the output from the second batch of logistic regression simulations.
 
 ```{r logsims_MC_A, cache = TRUE}
-load("lsimsA.RData")
-load("lsimsA-2.RData")
+load("Routput/lsimsA.RData")
+load("Routput/lsimsA-2.RData")
 ```
 
 The setup for this simulation is similar to the previous logistic regression simulations. The simulation configurations are again included for completeness. We first create the basis matrix $\Gamma$ for the true envelope space and the basis matrix for its orthogonal complement $\Gamma_o$.
@@ -756,8 +756,8 @@ ggplot(output_pthrootdets_ratios_long  %>% filter(estimator != "fixedu"),
 We load in the output from the first batch of logistic regression simulations.
 
 ```{r logsims_MC_B, cache = TRUE}
-load("lsimsB.RData")
-load("lsimsB-2.RData")
+load("Routput/lsimsB.RData")
+load("Routput/lsimsB-2.RData")
 ```
 
 
@@ -1287,26 +1287,26 @@ ggplot(output_pthrootdets_ratios_long  %>% filter(estimator != "fixedu"),
 We provide a second set of logistic regression simulations for illustration. We load in the output from the second batch of logistic regression simulations.
 
 ```{r logsims_MC_C}
-load("lsims20.RData")
-load("lsims20-2.RData")
-load("lsims20-3.RData")
-load("lsims20-4.RData")
-load("lsims20-5.RData")
-load("lsims20-6.RData")
-load("lsims20-7.RData")
-load("lsims20-8.RData")
-load("lsims20-9.RData")
-load("lsims20-10.RData")
-load("lsims20-11.RData")
-load("lsims20-12.RData")
-load("lsims20-13.RData")
-load("lsims20-14.RData")
-load("lsims20-15.RData")
-load("lsims20-16.RData")
-load("lsims20-17.RData")
-load("lsims20-18.RData")
-load("lsims20-19.RData")
-load("lsims20-20.RData")
+load("Routput/lsims20.RData")
+load("Routput/lsims20-2.RData")
+load("Routput/lsims20-3.RData")
+load("Routput/lsims20-4.RData")
+load("Routput/lsims20-5.RData")
+load("Routput/lsims20-6.RData")
+load("Routput/lsims20-7.RData")
+load("Routput/lsims20-8.RData")
+load("Routput/lsims20-9.RData")
+load("Routput/lsims20-10.RData")
+load("Routput/lsims20-11.RData")
+load("Routput/lsims20-12.RData")
+load("Routput/lsims20-13.RData")
+load("Routput/lsims20-14.RData")
+load("Routput/lsims20-15.RData")
+load("Routput/lsims20-16.RData")
+load("Routput/lsims20-17.RData")
+load("Routput/lsims20-18.RData")
+load("Routput/lsims20-19.RData")
+load("Routput/lsims20-20.RData")
 ```
 
 
@@ -2000,10 +2000,10 @@ ggplot(output_pthrootdets_ratios_long  %>% filter(estimator != "fixedu"),
 We now provide the Poisson regression simulation in the main text. The simulation output is loaded.
 
 ```{r poissims_MC_B, cache = TRUE}
-load("psimsB.RData")
-load("psimsB-2.RData")
-load("psimsB-3.RData")
-load("psimsB-4.RData")
+load("Routput/psimsB.RData")
+load("Routput/psimsB-2.RData")
+load("Routput/psimsB-3.RData")
+load("Routput/psimsB-4.RData")
 ```
 
 
