@@ -1363,7 +1363,7 @@ nboot <- 500 # bootstrap sample size
 
 
 
-The distribution of $u$ across bootstrap and Monte Carlo iterates is presented below. Code is included in the accompanying .Rmd file. We only consider dimensions 1-12, larger dimensions have ignorable empirical probability mass.
+The distribution of $u$ across bootstrap and Monte Carlo iterates is presented below. Code is included in the accompanying .Rmd file. In the paper we only consider dimensions 1-12 for visual reasons. Here we also include the other 3 components for completeness.
 
 ```{r, echo = FALSE}
 names_u <- c("u_star1D", "u_starFG")
@@ -1385,6 +1385,35 @@ output_udist_long <- gather(output_udist, estimator, dist,
 \vspace*{0.5cm}
 ```{r logCdim, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
 ggplot(output_udist_long %>% filter(comp <= 12), 
+       aes(x = n, y = dist, lty = estimator)) + 
+  ggtitle('Distribution of u (logistic regression)') + 
+  labs(x="n", y= "empirical probability") + 
+  ylim(-0.01, 0.50) + 
+  #geom_smooth(aes(x = n, y = dist), color = "black",
+  #            size = 0.75, method = "lm", formula = y ~ x + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = dist)) + 
+  scale_linetype_manual(
+    values=c('u_star1D'=1, 'u_starFG'=2),
+    labels = c('u 1D', 'u FG')) +
+  scale_colour_manual(name = 'Estimator:', 
+    values = c('u_star1D'='black','u_starFG'='black'),
+    labels = c('1D', 'FG')) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 4)
+```
+
+
+
+\newpage
+```{r logCdim15, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_udist_long, 
        aes(x = n, y = dist, lty = estimator)) + 
   ggtitle('Distribution of u (logistic regression)') + 
   labs(x="n", y= "empirical probability") + 
@@ -1472,6 +1501,29 @@ ggplot(output_ratios_long %>% filter(comp <= 12),
 
 
 \newpage
+```{r logCratios15, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_ratios_long, 
+  aes(x = n, y = ratio, color = estimator, lty = technique)) + 
+  ggtitle('Monte Carlo simulation of ratios (logistic regression)') + 
+  labs(x="n", y="ratio of standard errors") + 
+  #geom_smooth(aes(x = n, y = ratio), 
+  #            size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = ratio)) +
+  geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 4)
+```
+
+
+
+\newpage
 ```{r logCratios_nofixedu, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
 ggplot(output_ratios_long %>% filter(estimator != "fixedu", comp <= 12), 
        aes(x = n, y = ratio, color = estimator, lty = technique)) + 
@@ -1493,9 +1545,56 @@ ggplot(output_ratios_long %>% filter(estimator != "fixedu", comp <= 12),
 ```
 
 
+
+\newpage
+```{r logCratios_nofixedu15, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_ratios_long %>% filter(estimator != "fixedu"), 
+       aes(x = n, y = ratio, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u excluded)') + 
+  labs(x="n", y="ratio of standard errors") + 
+  #geom_smooth(aes(x = n, y = ratio), 
+  #            size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = ratio)) +
+  geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 4)
+```
+
+
+
+
 \newpage
 ```{r logCratios_nofixedu_and1D, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
 ggplot(output_ratios_long %>% filter(!(estimator == "fixedu" & technique == "1D"), comp <= 12), 
+       aes(x = n, y = ratio, color = estimator, lty = technique)) + 
+  ggtitle('(fixed u with 1D algorithm excluded)') + 
+  labs(x="n", y="ratio of standard errors") + 
+  #geom_smooth(aes(x = n, y = ratio), 
+  #            size = 0.75, method = "lm", formula = y ~ x,# + I(x^2), 
+  #            se = FALSE) + 
+	geom_line(aes(x = n, y = ratio)) +
+  geom_abline(intercept = 1, slope = 0,  color = "black", lty = 1) + 
+  theme(panel.background = element_blank(),
+        legend.key = element_rect(fill = "white"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_line("lightgrey", size = 0.15), 
+        panel.grid.major.y = element_line("lightgrey", size = 0.15), 
+        panel.grid.minor.x = element_line("lightgrey", size = 0.07), 
+        panel.grid.minor.y = element_line("lightgrey", size = 0.07))  + 
+  facet_wrap( ~ comp, ncol = 4)
+```
+
+
+\newpage
+```{r logCratios_nofixedu_and1D15, dependson="logsims_MC_C", echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(output_ratios_long %>% filter(!(estimator == "fixedu" & technique == "1D")), 
        aes(x = n, y = ratio, color = estimator, lty = technique)) + 
   ggtitle('(fixed u with 1D algorithm excluded)') + 
   labs(x="n", y="ratio of standard errors") + 
